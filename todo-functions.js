@@ -1,6 +1,6 @@
-// 1. wire up button event
-// 2. Remove todo by id
-// 3. Save and rerender the todos list
+//1 add event handler to checkbox
+//2 modify the correct objects completed property -> toggleTodo
+//3 save and rerender
 
 //Get all saved items
 
@@ -38,8 +38,6 @@ const renderTodos=function(todos,filters) {
         //generate todoDOM
         document.querySelector('div#todos').appendChild(generateTodoDOM(element));
         })
-    
-        
 }
 
 //remove selected todo by ID
@@ -51,6 +49,18 @@ return  todo.id===id
         todos.splice(findTodoID,1)
     }
 }
+// toggleTodo completed/not completed if checked
+const toggleTodo=function(id){
+            
+    const findTodoID=todos.find((todo)=>{
+        return todo.id===id
+    })
+    if(findTodoID!==undefined){
+        findTodoID.completed=!findTodoID.completed
+    }
+}
+
+//when boxes are checked todo.completed to be checked
 
 //generate todo DOM for individual todo
 const generateTodoDOM= function(todo){
@@ -69,13 +79,21 @@ const generateTodoDOM= function(todo){
     todoEL.appendChild(todoText)
 
      //create check box 
-     let todoCheck=document.createElement("input")
-     todoCheck.setAttribute('type','checkbox')
-     todoEL.appendChild(todoCheck)
+     const todoCheckButton=document.createElement("input")
+     todoCheckButton.setAttribute('type','checkbox')
+     todoEL.appendChild(todoCheckButton)
     //Check box to be checked if todo is completed
-    todo.completed===true?todoCheck.checked=true:todoCheck.checked=false
+    todoCheckButton.checked=todo.completed
+
+    todoCheckButton.addEventListener('change',function(){
+        
+        toggleTodo(todo.id)
+        renderTodos(todos,filters)
+        saveTodosLocal()
+    })
   
     todoButton.addEventListener('click',function(){
+        
         removeTodo(todo.id)
         renderTodos(todos,filters)
         saveTodosLocal()
@@ -86,6 +104,7 @@ const generateTodoDOM= function(todo){
  
     }
 
+ 
 //get the DOM elements for list summary
 const listSummary= function(leftTodos){
     const summary=document.createElement("h2")
