@@ -69,10 +69,12 @@ const generateTodoDOM= function(todo){
     todoEL.appendChild(todoText)
 
      //create check box 
-     const todoCheck=document.createElement("input")
+     let todoCheck=document.createElement("input")
      todoCheck.setAttribute('type','checkbox')
-       todoEL.appendChild(todoCheck)
-
+     todoEL.appendChild(todoCheck)
+    //Check box to be checked if todo is completed
+    todo.completed===true?todoCheck.checked=true:todoCheck.checked=false
+  
     todoButton.addEventListener('click',function(){
         removeTodo(todo.id)
         renderTodos(todos,filters)
