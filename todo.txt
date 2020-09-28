@@ -1,0 +1,2 @@
+1. create and link a javascript file to the HTML
+2. Remove all p tags that have the in the text
