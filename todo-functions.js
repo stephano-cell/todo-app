@@ -6,12 +6,7 @@
 
 const getSavedTodos= function(){
     const todosJSON=localStorage.getItem('todos')
-    
-    if(todosJSON!==null)
-    {return JSON.parse(todosJSON)
-    }else{
-        return []
-    }
+    return todosJSON?JSON.parse(todosJSON):[]
     }
 //set todos to local server function
 const saveTodosLocal=function(){
@@ -55,7 +50,7 @@ const toggleTodo=function(id){
     const findTodoID=todos.find((todo)=>{
         return todo.id===id
     })
-    if(findTodoID!==undefined){
+    if(findTodoID){
         findTodoID.completed=!findTodoID.completed
     }
 }
