@@ -1,12 +1,15 @@
-//1 add event handler to checkbox
-//2 modify the correct objects completed property -> toggleTodo
-//3 save and rerender
-
+' use strict'
 //Get all saved items
 
 const getSavedTodos= function(){
     const todosJSON=localStorage.getItem('todos')
+
+    try{
     return todosJSON?JSON.parse(todosJSON):[]
+    }
+    catch(e){
+        return []
+    }
     }
 //set todos to local server function
 const saveTodosLocal=function(){
