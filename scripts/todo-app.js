@@ -9,32 +9,35 @@ let todos=getSavedTodos()
 renderTodos(todos,filters)
     
 
-document.querySelector('input#search-text').addEventListener('input',function(e){
+document.querySelector('#search-text').addEventListener('input',function(e){
 
     filters.searchText=e.target.value
  
     renderTodos(todos,filters)
  })
 
- document.querySelector('form#todo-text').addEventListener('submit',function(e){
-     e.preventDefault()
+ document.querySelector('#todo-text').addEventListener('submit',function(e){
      
+    const text=e.target.elements.todoText.value.trim()
+    e.preventDefault() 
+
+     if(text.length>0){
+   
     todos.push({
         //add unique identifier for each todo
-
         id:uuidv4(),
-        text:e.target.elements.todoText.value,
+        text,
         completed:false
     })
         //add in local storage every time adding new todo    
-        saveTodosLocal()       
-       renderTodos(todos,filters)
-    e.target.elements.todoText.value=''
-   
+        saveTodos(todos)       
+        renderTodos(todos,filters)
+        e.target.elements.todoText.value=''
+}
  })
 
 
-document.querySelector("label#hide-complete").addEventListener('change',function(e){    
+document.querySelector("#hide-complete").addEventListener('change',function(e){    
 filters.hideCompleted=e.target.checked
 renderTodos(todos,filters)
 })
